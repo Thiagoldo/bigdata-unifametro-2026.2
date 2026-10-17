@@ -1,0 +1,36 @@
+services:
+  app:
+    build:
+      context: airflow/
+      dockerfile: Dockerfile
+    container_name: aula_python
+    volumes:
+      - ./:/app
+      - app_data:/home/airflow
+    networks:
+      - airflow-db
+    ports:
+      - 8080:8080
+    command: >
+      bash -c "export AIRFLOW_HOME=/home/airflow/airflow && source /home/airflow/venv/bin/activate && airflow standalone"
+
+  db:
+    build:
+      context: db/
+      dockerfile: Dockerfile
+    container_name: aula_postgres
+    environment:
+      - POSTGRES_PASSWORD=1234
+    ports:
+      - 5432:5432
+    volumes:
+      - data_sql:/var/lib/postgresql
+    networks:
+      - airflow-db
+
+volumes:
+  data_sql:
+  app_data:
+
+networks:
+  airflow-db:

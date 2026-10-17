@@ -1,0 +1,76 @@
+CREATE DATABASE airflow;
+CREATE USER airflow WITH PASSWORD '1234';
+GRANT ALL PRIVILEGES ON DATABASE airflow TO airflow;
+-- 1) Colocar o DB sob o dono 'airflow'
+ALTER DATABASE airflow OWNER TO airflow;
+-- 2) Garantir acesso ao DB
+GRANT CONNECT, TEMP ON DATABASE airflow TO airflow;
+-- 3) Dar permissão no schema public
+GRANT USAGE, CREATE ON SCHEMA public TO airflow;
+-- 4) Transferir a posse do schema public para airflow
+ALTER SCHEMA public OWNER TO airflow;
+
+\c airflow;
+
+CREATE TABLE IF NOT EXISTS convenios (
+    id                              INTEGER PRIMARY KEY,
+    cod_concedente                  TEXT,
+    cod_financiador                 TEXT,
+    cod_gestora                     TEXT,
+    cod_orgao                       TEXT,
+    cod_secretaria                  TEXT,
+    descricao_modalidade            TEXT,
+    descricao_objeto                TEXT,
+    descricao_tipo                  TEXT,
+    descricao_url                   TEXT,
+    data_assinatura                 TEXT,
+    data_processamento              TEXT,
+    data_termino                    TEXT,
+    flg_tipo                        TEXT,
+    isn_parte_destino               TEXT,
+    isn_sic                         TEXT,
+    num_spu                         TEXT,
+    valor_contrato                  NUMERIC,
+    isn_modalidade                  TEXT,
+    isn_entidade                    TEXT,
+    tipo_objeto                     TEXT,
+    num_spu_licitacao               TEXT,
+    descricao_justificativa         TEXT,
+    valor_can_rstpg                 NUMERIC,
+    data_publicacao_portal          TEXT,
+    descricao_url_pltrb             TEXT,
+    descricao_url_ddisp             TEXT,
+    descricao_url_inexg             TEXT,
+    cod_plano_trabalho              TEXT,
+    num_certidao                    TEXT,
+    descriaco_edital                TEXT,
+    cpf_cnpj_financiador            TEXT,
+    num_contrato                    TEXT,
+    valor_original_concedente       NUMERIC,
+    valor_original_contrapartida    NUMERIC,
+    valor_atualizado_concedente     NUMERIC,
+    valor_atualizado_contrapartida  NUMERIC,
+    created_at                      TEXT,
+    updated_at                      TEXT,
+    plain_num_contrato              TEXT,
+    calculated_valor_aditivo        NUMERIC,
+    calculated_valor_ajuste         NUMERIC,
+    calculated_valor_empenhado      NUMERIC,
+    calculated_valor_pago           NUMERIC,
+    contract_type                   TEXT,
+    infringement_status             TEXT,
+    cod_financiador_including_zeroes TEXT,
+    accountability_status           TEXT,
+    plain_cpf_cnpj_financiador      TEXT,
+    descricao_situacao              TEXT,
+    data_publicacao_doe             TEXT,
+    descricao_nome_credor           TEXT,
+    isn_parte_origem                TEXT,
+    data_auditoria                  TEXT,
+    data_termino_original           TEXT,
+    data_inicio                     TEXT,
+    data_rescisao                   TEXT,
+    confidential                    BOOLEAN,
+    gestor_contrato                 TEXT);
+
+ALTER TABLE convenios OWNER TO airflow;
